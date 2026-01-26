@@ -23,7 +23,6 @@
         .header { background: var(--nba-blue); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--nba-red); }
         .header h1 { font-size: 1.8rem; letter-spacing: 1px; }
 
-        /* Estilização da área de seleção */
         .team-select-container { 
             display: flex; 
             justify-content: center; 
@@ -96,9 +95,7 @@
         <select id="select-team-a" onchange="renderPlayers('A')"></select>
         <span id="top-gm-a" class="gm-top-label">GM: -</span>
     </div>
-
     <span style="font-weight: bold; margin-top: 10px; color: #666;">X</span>
-
     <div class="select-box">
         <select id="select-team-b" onchange="renderPlayers('B')"></select>
         <span id="top-gm-b" class="gm-top-label">GM: -</span>
@@ -144,26 +141,25 @@
 </div>
 
 <script>
-    const CAP_MAX = 289963125;
-    const CAP_MIN = 260966250;
+    const CAP_MAX = 289963.12; // Ajustado para a escala dos dados (k)
+    const CAP_MIN = 260966.25;
 
     const nbaData = {
         "Atlanta Bahia Hawks": {
-            gm: "Breno Victor",
-            totalCap: 287953.11,
+            gm: "Breno",
             players: [
                 {name: "Trae Young", salary: 45999.66, pos: "PG"},
-                {name: "Devin Booker", salary: 53142.26, pos: "PG SG"},
-                {name: "Franz Wagner", salary: 38661.75, pos: "SF PF"},
-                {name: "Lauri Markkanen", salary: 46394.10, pos: "PF SF"},
+                {name: "Devin Booker", salary: 53142.26, pos: "PG/SG"},
+                {name: "Franz Wagner", salary: 38661.75, pos: "SF/PF"},
+                {name: "Lauri Markkanen", salary: 46394.10, pos: "PF/SF"},
                 {name: "Ivica Zubac", salary: 18102.00, pos: "C"},
-                {name: "Andrew Nembhard", salary: 18102.00, pos: "PG SG"},
+                {name: "Andrew Nembhard", salary: 18102.00, pos: "PG/SG"},
                 {name: "Nickeil Alexander-Walker", salary: 15161.80, pos: "SG"},
-                {name: "Kelly Oubre", salary: 8382.15, pos: "SF SG"},
-                {name: "Sion James", salary: 2296.27, pos: "SF SG"},
+                {name: "Kelly Oubre", salary: 8382.15, pos: "SF/SG"},
+                {name: "Sion James", salary: 2296.27, pos: "SF/SG"},
                 {name: "Bub Carrington", salary: 4677.60, pos: "PG"},
                 {name: "Kris Murray", salary: 3132.00, pos: "PF"},
-                {name: "Will Riley", salary: 3512.52, pos: "SF SG"},
+                {name: "Will Riley", salary: 3512.52, pos: "SF/SG"},
                 {name: "Nikola Topic", salary: 5182.92, pos: "PG"},
                 {name: "Julian Champagnie", salary: 3000.00, pos: "SF"},
                 {name: "Johnny Furphy", salary: 1955.38, pos: "SG"},
@@ -173,37 +169,35 @@
             ]
         },
         "Milwaukee United": {
-            gm: "Abner Calado",
-            totalCap: 274367.49,
+            gm: "Abner",
             players: [
                 {name: "Luka Dončić", salary: 45999.66, pos: "PG"},
-                {name: "CJ McCollum", salary: 30666.67, pos: "SG PG"},
-                {name: "Cooper Flagg", salary: 13825.92, pos: "SF PF"},
+                {name: "CJ McCollum", salary: 30666.67, pos: "SG/PG"},
+                {name: "Cooper Flagg", salary: 13825.92, pos: "SF/PF"},
                 {name: "Kevin Durant", salary: 54708.61, pos: "PF"},
                 {name: "Victor Wembanyama", salary: 13376.88, pos: "C"},
                 {name: "Dennis Schroder", salary: 14104.00, pos: "PG"},
-                {name: "Keldon Johnson", salary: 17500.00, pos: "SF PF"},
+                {name: "Keldon Johnson", salary: 17500.00, pos: "SF/PF"},
                 {name: "PJ Washington", salary: 14152.17, pos: "PF"},
-                {name: "Josh Hart", salary: 19472.24, pos: "SF SG"},
+                {name: "Josh Hart", salary: 19472.24, pos: "SF/SG"},
                 {name: "Sam Merrill", salary: 8482.14, pos: "SG"},
                 {name: "Jay Huff", salary: 2349.58, pos: "C"},
                 {name: "AJ Green", salary: 2301.59, pos: "SG"},
-                {name: "Dillon Brooks", salary: 21124.11, pos: "SF SG"},
-                {name: "Hugo Gonzalez", salary: 2783.88, pos: "SF SG"},
+                {name: "Dillon Brooks", salary: 21124.11, pos: "SF/SG"},
+                {name: "Hugo Gonzalez", salary: 2783.88, pos: "SF/SG"},
                 {name: "Jake LaRavia", salary: 6000.00, pos: "PF"},
-                {name: "Jeremiah Fears", salary: 7520.04, pos: "SG PG"}
+                {name: "Jeremiah Fears", salary: 7520.04, pos: "SG/PG"}
             ]
         },
         "New England Goat": {
-            gm: "Joseph Felipe",
-            totalCap: 300082.36,
+            gm: "Joseph",
             players: [
                 {name: "Stephen Curry", salary: 59606.82, pos: "PG"},
-                {name: "Desmond Bane", salary: 36725.67, pos: "SG SF"},
-                {name: "Miles Bridges", salary: 25000.00, pos: "SF PF"},
-                {name: "Karl Anthony-Towns", salary: 53142.26, pos: "C PF"},
+                {name: "Desmond Bane", salary: 36725.67, pos: "SG/SF"},
+                {name: "Miles Bridges", salary: 25000.00, pos: "SF/PF"},
+                {name: "Karl Anthony-Towns", salary: 53142.26, pos: "C/PF"},
                 {name: "Jared McCain", salary: 4221.36, pos: "PG"},
-                {name: "Derrick White", salary: 28100.00, pos: "SG PG"},
+                {name: "Derrick White", salary: 28100.00, pos: "SG/PG"},
                 {name: "Bam Adebayo", salary: 37096.62, pos: "C"},
                 {name: "Aaron Gordon", salary: 22841.46, pos: "PF"},
                 {name: "Moussa Diabate", salary: 2270.74, pos: "PF"},
@@ -212,26 +206,25 @@
                 {name: "Khaman Maluach", salary: 6016.08, pos: "C"},
                 {name: "Walker Kessler", salary: 4878.94, pos: "C"},
                 {name: "Noa Essengue", salary: 5429.52, pos: "PF"},
-                {name: "Walter Clayton Jr", salary: 3991.32, pos: "SG PG"},
+                {name: "Walter Clayton Jr", salary: 3991.32, pos: "SG/PG"},
                 {name: "Asa Newell", salary: 3237.48, pos: "PF"}
             ]
         },
         "Minnesota Lupe": {
-            gm: "Saulo Duarte",
-            totalCap: 271342.65,
+            gm: "Duarte",
             players: [
-                {name: "Dylan Harper", salary: 12370.32, pos: "PG SG"},
+                {name: "Dylan Harper", salary: 12370.32, pos: "PG/SG"},
                 {name: "Ayo Dosunmu", salary: 7518.52, pos: "SG"},
-                {name: "Paul George", salary: 51666.09, pos: "SF PF"},
+                {name: "Paul George", salary: 51666.09, pos: "SF/PF"},
                 {name: "Nicolas Claxton", salary: 25352.27, pos: "C"},
                 {name: "Pippen Jr.", salary: 2270.74, pos: "PG"},
-                {name: "Zaccharie Risacher", salary: 13197.72, pos: "SF PF"},
-                {name: "Jaime Jaquez Jr", salary: 3861.60, pos: "SF SG"},
+                {name: "Zaccharie Risacher", salary: 13197.72, pos: "SF/PF"},
+                {name: "Jaime Jaquez Jr", salary: 3861.60, pos: "SF/SG"},
                 {name: "Jerami Grant", salary: 32000.00, pos: "PF"},
                 {name: "Luke Kornet", salary: 11000.00, pos: "C"},
                 {name: "Moses Moody", salary: 11574.08, pos: "SG"},
                 {name: "Gary Trent Jr", salary: 3697.11, pos: "SG"},
-                {name: "Tobias Harris", salary: 26634.15, pos: "PF SF"},
+                {name: "Tobias Harris", salary: 26634.15, pos: "PF/SF"},
                 {name: "Miles McBride", salary: 4333.33, pos: "PG"},
                 {name: "Collin Gillespie", salary: 2296.27, pos: "PG"},
                 {name: "Nique Clifford", salary: 3108.12, pos: "SG"},
@@ -242,43 +235,41 @@
             ]
         },
         "Kansas City Falcons": {
-            gm: "Vitor Natan",
-            totalCap: 287324.62,
+            gm: "Natan",
             players: [
                 {name: "Ja Morant", salary: 39446.09, pos: "PG"},
-                {name: "Donovan Mitchell", salary: 46394.10, pos: "SG PG"},
+                {name: "Donovan Mitchell", salary: 46394.10, pos: "SG/PG"},
                 {name: "Jalen Johnson", salary: 30000.00, pos: "PF"},
                 {name: "Onyeka Okongwu", salary: 15000.00, pos: "C"},
                 {name: "Scoot Henderson", salary: 10748.04, pos: "PG"},
                 {name: "Jaden Ivey", salary: 10107.16, pos: "SG"},
                 {name: "Bilal Coulibaly", salary: 7275.60, pos: "SF"},
-                {name: "Brandin Podziemski", salary: 3687.96, pos: "SG PG"},
-                {name: "Coby White", salary: 12888.89, pos: "PG SG"},
+                {name: "Brandin Podziemski", salary: 3687.96, pos: "SG/PG"},
+                {name: "Coby White", salary: 12888.89, pos: "PG/SG"},
                 {name: "Tari Eason", salary: 5675.77, pos: "SF"},
-                {name: "Jayson Tatum", salary: 54126.45, pos: "PF SF"},
+                {name: "Jayson Tatum", salary: 54126.45, pos: "PF/SF"},
                 {name: "Mitchell Robinson", salary: 12954.55, pos: "C"},
                 {name: "Justin Champagnie", salary: 2349.58, pos: "SF"},
-                {name: "Will Richard", salary: 1272.87, pos: "SG PF"},
+                {name: "Will Richard", salary: 1272.87, pos: "SG/PF"},
                 {name: "Isaiah Collier", salary: 2638.20, pos: "PG"},
                 {name: "Cason Wallace", salary: 5820.24, pos: "SG"},
                 {name: "Ty Jerome", salary: 8781.00, pos: "PG"},
-                {name: "Jalen Pickett", salary: 2221.68, pos: "SG PG"},
-                {name: "Max Strus", salary: 15936.45, pos: "SF SG"}
+                {name: "Jalen Pickett", salary: 2221.68, pos: "SG/PG"},
+                {name: "Max Strus", salary: 15936.45, pos: "SF/SG"}
             ]
         },
         "Seattle Waves": {
-            gm: "Vitor Fiais / Isaac Guerra",
-            totalCap: 348608.68,
+            gm: "Fiais",
             players: [
                 {name: "Shai Gilgeous-Alexander", salary: 38333.05, pos: "PG"},
                 {name: "Jalen Green", salary: 33584.50, pos: "SG"},
                 {name: "Alperen Şengün", salary: 33944.95, pos: "C"},
                 {name: "TJ McConnell", salary: 10200.00, pos: "PG"},
-                {name: "Demar DeRozan", salary: 24750.00, pos: "SF PF"},
-                {name: "Shaedon Sharpe", salary: 8399.98, pos: "SG SF"},
+                {name: "Demar DeRozan", salary: 24750.00, pos: "SF/PF"},
+                {name: "Shaedon Sharpe", salary: 8399.98, pos: "SG/SF"},
                 {name: "Michael Porter Jr", salary: 38333.05, pos: "SF"},
                 {name: "Hansen Yang", salary: 4422.36, pos: "C"},
-                {name: "Keyonte George", salary: 4278.96, pos: "PG SG"},
+                {name: "Keyonte George", salary: 4278.96, pos: "PG/SG"},
                 {name: "Julius Randle", salary: 30935.52, pos: "PF"},
                 {name: "Donte DiVicenzo", salary: 11990.00, pos: "SG"},
                 {name: "Sam Hauser", salary: 10044.64, pos: "SF"},
@@ -286,192 +277,232 @@
                 {name: "Myles Turner", salary: 25318.25, pos: "C"},
                 {name: "Tre Jones", salary: 8000.00, pos: "PG"},
                 {name: "Wendell Carter Jr", salary: 10850.00, pos: "C"},
-                {name: "Tyrese Haliburton", salary: 45550.51, pos: "PG SG"}
+                {name: "Tyrese Haliburton", salary: 45550.51, pos: "PG/SG"}
             ]
         },
         "Seattle Grunge's": {
-            gm: "Alessandro Cromwell",
-            totalCap: 272473.54,
+            gm: "Cromwell",
             players: [
                 {name: "Darius Garland", salary: 39446.09, pos: "PG"},
-                {name: "Klay Thompson", salary: 16666.67, pos: "SG SF"},
-                {name: "Jabari Smith Jr", salary: 12350.39, pos: "PF C"},
-                {name: "Alex Sarr", salary: 11808.24, pos: "C PF"},
-                {name: "John Collins", salary: 26580.00, pos: "PF C"},
-                {name: "Luguentz Dort", salary: 18222.22, pos: "SG SF"},
-                {name: "Dejounte Murray", salary: 30801.10, pos: "SG PG"},
-                {name: "Rui Hachimura", salary: 18259.26, pos: "PF SF"},
+                {name: "Klay Thompson", salary: 16666.67, pos: "SG/SF"},
+                {name: "Jabari Smith Jr", salary: 12350.39, pos: "PF/C"},
+                {name: "Alex Sarr", salary: 11808.24, pos: "C/PF"},
+                {name: "John Collins", salary: 26580.00, pos: "PF/C"},
+                {name: "Luguentz Dort", salary: 18222.22, pos: "SG/SF"},
+                {name: "Dejounte Murray", salary: 30801.10, pos: "SG/PG"},
+                {name: "Rui Hachimura", salary: 18259.26, pos: "PF/SF"},
                 {name: "Toumani Camara", salary: 2221.68, pos: "PF"},
-                {name: "Benedict Mathurin", salary: 9187.57, pos: "SF SG"},
+                {name: "Benedict Mathurin", salary: 9187.57, pos: "SF/SG"},
                 {name: "Jaylen Wells", salary: 1955.38, pos: "SG"},
-                {name: "Collin Sexton", salary: 18975.00, pos: "SG PG"},
-                {name: "Naz Reid", salary: 21551.72, pos: "C PF"},
+                {name: "Collin Sexton", salary: 18975.00, pos: "SG/PG"},
+                {name: "Naz Reid", salary: 21551.72, pos: "C/PF"},
                 {name: "Yves Missi", salary: 3353.04, pos: "C"},
                 {name: "Max Christie", salary: 7714.29, pos: "SG"},
-                {name: "Kyle Kuzma", salary: 22410.61, pos: "PF SF"},
-                {name: "Anthony Black", salary: 7970.28, pos: "PG SG"},
+                {name: "Kyle Kuzma", salary: 22410.61, pos: "PF/SF"},
+                {name: "Anthony Black", salary: 7970.28, pos: "PG/SG"},
                 {name: "Kyle Filipowski", salary: 3000.00, pos: "PF"}
             ]
         },
         "Baltimore Ducks": {
-            gm: "Italo Felipe",
-            totalCap: 292675.53,
+            gm: "Italo",
             players: [
-                {name: "Cade Cunningham", salary: 46394.10, pos: "PG SG"},
-                {name: "Scottie Barnes", salary: 38661.75, pos: "SF SG PF"},
-                {name: "Evan Mobley", salary: 46394.10, pos: "PF C"},
+                {name: "Cade Cunningham", salary: 46394.10, pos: "PG/SG"},
+                {name: "Scottie Barnes", salary: 38661.75, pos: "SF/SG/PF"},
+                {name: "Evan Mobley", salary: 46394.10, pos: "PF/C"},
                 {name: "Nikola Vučević", salary: 21481.48, pos: "C"},
                 {name: "Jalen Brunson", salary: 34944.00, pos: "PG"},
                 {name: "Quentin Grimes", salary: 8741.21, pos: "SG"},
-                {name: "Amen Thompson", salary: 9690.60, pos: "SF PF SG"},
-                {name: "Ausar Thompson", salary: 8775.00, pos: "SF PF"},
+                {name: "Amen Thompson", salary: 9690.60, pos: "SF/PF/SG"},
+                {name: "Ausar Thompson", salary: 8775.00, pos: "SF/PF"},
                 {name: "Trendon Watford", salary: 2461.46, pos: "PF"},
                 {name: "Deandre Ayton", salary: 8104.00, pos: "C"},
                 {name: "Jarrett Allen", salary: 20000.00, pos: "C"},
-                {name: "Trey Murphy", salary: 25000.00, pos: "SF SG"},
+                {name: "Trey Murphy", salary: 25000.00, pos: "SF/SG"},
                 {name: "Zach Edey", salary: 6045.00, pos: "C"},
-                {name: "Ace Bailey", salary: 9069.84, pos: "SF PF"},
+                {name: "Ace Bailey", salary: 9069.84, pos: "SF/PF"},
                 {name: "Nolan Traore", salary: 3811.56, pos: "PG"},
                 {name: "Reed Sheppard", salary: 10603.56, pos: "SG"},
                 {name: "Tyrese Proctor", salary: 1272.87, pos: "SG"}
             ]
         },
         "Los Angeles Beckers": {
-            gm: "Alison Becker",
-            totalCap: 292701.30,
+            gm: "Becker",
             players: [
-                {name: "Kyrie Irving", salary: 36566.00, pos: "PG SG"},
-                {name: "Tyrese Maxey", salary: 37958.76, pos: "PG SG"},
-                {name: "Kawhi Leonard", salary: 50000.00, pos: "SF PF"},
+                {name: "Kyrie Irving", salary: 36566.00, pos: "PG/SG"},
+                {name: "Tyrese Maxey", salary: 37958.76, pos: "PG/SG"},
+                {name: "Kawhi Leonard", salary: 50000.00, pos: "SF/PF"},
                 {name: "Jalen Williams", salary: 6581.00, pos: "PF"},
                 {name: "Joel Embiid", salary: 55224.53, pos: "C"},
-                {name: "Stephon Castle", salary: 9560.52, pos: "PG SG"},
-                {name: "Zach LaVine", salary: 47499.66, pos: "SG SF"},
+                {name: "Stephon Castle", salary: 9560.52, pos: "PG/SG"},
+                {name: "Zach LaVine", salary: 47499.66, pos: "SG/SF"},
                 {name: "Cam Whitmore", salary: 3539.76, pos: "SF"},
-                {name: "Keegan Murray", salary: 11144.09, pos: "PF SF"},
+                {name: "Keegan Murray", salary: 11144.09, pos: "PF/SF"},
                 {name: "Jalen Duren", salary: 6483.14, pos: "C"},
                 {name: "André Drummond", salary: 5000.00, pos: "C"},
                 {name: "GG Jackson", salary: 2221.68, pos: "PF"},
-                {name: "Oso Ighodaro", salary: 1955.38, pos: "PF C"},
+                {name: "Oso Ighodaro", salary: 1955.38, pos: "PF/C"},
                 {name: "Cody Williams", salary: 5742.48, pos: "SG"},
-                {name: "DeAnthony Melton", salary: 3080.92, pos: "PG SG"},
+                {name: "De'Anthony Melton", salary: 3080.92, pos: "PG/SG"},
                 {name: "Cam Spencer", salary: 2537.99, pos: "SG"},
                 {name: "Maxime Raynaud", salary: 1272.87, pos: "C"},
                 {name: "Collin Murray-Boyles", salary: 6332.52, pos: "PF"}
             ]
         },
         "San Francisco Red Eagles": {
-            gm: "Joao Victor Schmidt Bemfica",
-            totalCap: 269527.13,
+            gm: "Bemfica",
             players: [
                 {name: "LaMelo Ball", salary: 37958.76, pos: "PG"},
-                {name: "Brandon Miller", salary: 11968.80, pos: "SF SG"},
-                {name: "Paolo Banchero", salary: 15334.77, pos: "PF SF"},
+                {name: "Brandon Miller", salary: 11968.80, pos: "SF/SG"},
+                {name: "Paolo Banchero", salary: 15334.77, pos: "PF/SF"},
                 {name: "Rudy Gobert", salary: 35000.00, pos: "C"},
                 {name: "Royce O'Neale", salary: 10625.00, pos: "SF"},
                 {name: "Ryan Kalkbrenner", salary: 2296.27, pos: "C"},
                 {name: "Matas Buzelis", salary: 5455.56, pos: "SF"},
-                {name: "Tyler Herro", salary: 31000.00, pos: "SG PG"},
+                {name: "Tyler Herro", salary: 31000.00, pos: "SG/PG"},
                 {name: "Luke Kennard", salary: 11000.00, pos: "SG"},
                 {name: "Carter Bryant", salary: 4900.32, pos: "SF"},
                 {name: "Zion Williamson", salary: 39446.09, pos: "PF"},
-                {name: "Jordan Poole", salary: 31848.22, pos: "SG PG"},
-                {name: "Cam Johnson", salary: 21057.07, pos: "SF PF"},
+                {name: "Jordan Poole", salary: 31848.22, pos: "SG/PG"},
+                {name: "Cam Johnson", salary: 21057.07, pos: "SF/PF"},
                 {name: "Noah Clowney", salary: 3398.64, pos: "PF"},
                 {name: "Tre Johnson", salary: 8237.64, pos: "SG"}
             ]
         },
         "D.C. Tambaqui": {
-            gm: "Icaro Costa",
-            totalCap: 282504.85,
+            gm: "Icaro",
             players: [
                 {name: "De'Aaron Fox", salary: 37096.62, pos: "PG"},
-                {name: "Austin Reaves", salary: 13937.57, pos: "SG SF"},
-                {name: "Anthony Edwards", salary: 45550.51, pos: "SG SF"},
-                {name: "Andrew Wiggins", salary: 28223.22, pos: "SF PF"},
-                {name: "Anthony Davis", salary: 54126.45, pos: "C PF"},
+                {name: "Austin Reaves", salary: 13937.57, pos: "SG/SF"},
+                {name: "Anthony Edwards", salary: 45550.51, pos: "SG/SF"},
+                {name: "Andrew Wiggins", salary: 28223.22, pos: "SF/PF"},
+                {name: "Anthony Davis", salary: 54126.45, pos: "C/PF"},
                 {name: "Jakob Pöeltl", salary: 19500.00, pos: "C"},
                 {name: "Adem Bona", salary: 1955.38, pos: "C"},
-                {name: "Santi Aldama", salary: 18485.92, pos: "PF C"},
-                {name: "Isaac Okoro", salary: 11000.00, pos: "SF SG"},
+                {name: "Santi Aldama", salary: 18485.92, pos: "PF/C"},
+                {name: "Isaac Okoro", salary: 11000.00, pos: "SF/SG"},
                 {name: "Mike Conley", salary: 10774.04, pos: "PG"},
                 {name: "Jarace Walker", salary: 6665.52, pos: "PF"},
                 {name: "Kris Dunn", salary: 5426.40, pos: "PG"},
                 {name: "Donovan Clingan", salary: 7178.40, pos: "C"},
-                {name: "Jalen Smith", salary: 9000.00, pos: "PF C"},
+                {name: "Jalen Smith", salary: 9000.00, pos: "PF/C"},
                 {name: "Jock Landale", salary: 2296.27, pos: "C"},
-                {name: "Noah Penda", salary: 1272.87, pos: "SF PF"},
+                {name: "Noah Penda", salary: 1272.87, pos: "SF/PF"},
                 {name: "Kon Knueppel", salary: 10015.68, pos: "SG"}
             ]
         },
         "San Antonio Stars": {
-            gm: "Fernando Oliveira",
-            totalCap: 306095.32,
+            gm: "Fernando",
             players: [
-                {name: "Josh Giddey", salary: 22321.43, pos: "SG SF"},
-                {name: "Giannis Antetokounmpo", salary: 54126.45, pos: "PF C"},
+                {name: "Josh Giddey", salary: 22321.43, pos: "SG/SF"},
+                {name: "Giannis Antetokounmpo", salary: 54126.45, pos: "PF/C"},
                 {name: "Jusuf Nurkić", salary: 19375.00, pos: "C"},
                 {name: "Khris Middleton", salary: 33296.30, pos: "SF"},
-                {name: "Jimmy Butler", salary: 54126.45, pos: "SF SG PF"},
+                {name: "Jimmy Butler", salary: 54126.45, pos: "SF/SG/PF"},
                 {name: "Russell Westbrook", salary: 3634.15, pos: "PG"},
-                {name: "Deni Avdija", salary: 14375.00, pos: "SF PF"},
-                {name: "Grayson Allen", salary: 16875.00, pos: "SG PG"},
-                {name: "Jrue Holiday", salary: 32400.00, pos: "PG SG"},
+                {name: "Deni Avdija", salary: 14375.00, pos: "SF/PF"},
+                {name: "Grayson Allen", salary: 16875.00, pos: "SG/PG"},
+                {name: "Jrue Holiday", salary: 32400.00, pos: "PG/SG"},
                 {name: "Egor Demin", salary: 6889.20, pos: "PG"},
-                {name: "Tim Hardaway Jr", salary: 2296.27, pos: "SG SF"},
+                {name: "Tim Hardaway Jr", salary: 2296.27, pos: "SG/SF"},
                 {name: "Pelle Larsson", salary: 1955.38, pos: "SG"},
-                {name: "Buddy Hield", salary: 9219.51, pos: "SG SF"},
+                {name: "Buddy Hield", salary: 9219.51, pos: "SG/SF"},
                 {name: "Robert Williams", salary: 13285.71, pos: "C"},
                 {name: "Luka Garza", salary: 2461.46, pos: "C"},
-                {name: "Bradley Beal", salary: 5354.00, pos: "SF SG"},
+                {name: "Bradley Beal", salary: 5354.00, pos: "SF/SG"},
                 {name: "Damian Lillard", salary: 14104.00, pos: "PG"}
             ]
         },
         "Tampa Bay Mariners": {
-            gm: "Cauli Jaskulski",
-            totalCap: 270135.57,
+            gm: "Cauli",
             players: [
                 {name: "Nikola Jokić", salary: 55224.53, pos: "C"},
-                {name: "Saddiq Bey", salary: 6118.64, pos: "SF PF"},
-                {name: "RJ Barrett", salary: 27705.36, pos: "SF SG"},
+                {name: "Saddiq Bey", salary: 6118.64, pos: "SF/PF"},
+                {name: "RJ Barrett", salary: 27705.36, pos: "SF/SG"},
                 {name: "Daniel Gafford", salary: 14386.32, pos: "C"},
-                {name: "Herb Jones", salary: 13937.57, pos: "SF PF"},
+                {name: "Herb Jones", salary: 13937.57, pos: "SF/PF"},
                 {name: "Jaden McDaniels", salary: 24393.10, pos: "SF"},
                 {name: "Cam Thomas", salary: 5993.17, pos: "SG"},
                 {name: "Day'Ron Sharpe", salary: 6250.00, pos: "C"},
                 {name: "Joan Beringer", salary: 4201.08, pos: "C"},
-                {name: "Jordan Goodwin", salary: 2349.58, pos: "PG SG"},
+                {name: "Jordan Goodwin", salary: 2349.58, pos: "PG/SG"},
                 {name: "Duncan Robinson", salary: 16834.69, pos: "SF"},
-                {name: "Jase Richardson", salary: 2983.32, pos: "SG PG"},
+                {name: "Jase Richardson", salary: 2983.32, pos: "SG/PG"},
                 {name: "Harrison Barnes", salary: 19000.00, pos: "SF"},
                 {name: "Chet Holmgren", salary: 13731.37, pos: "C"},
-                {name: "Dorian Finney Smith", salary: 15378.48, pos: "PF SF"},
+                {name: "Dorian Finney-Smith", salary: 15378.48, pos: "PF/SF"},
                 {name: "Ron Holland", salary: 8657.28, pos: "SF"},
-                {name: "Isaiah Stewart", salary: 15000.00, pos: "C PF"},
-                {name: "Kevin Huerter", salary: 17991.07, pos: "SG SF"}
+                {name: "Isaiah Stewart", salary: 15000.00, pos: "C/PF"},
+                {name: "Kevin Huerter", salary: 17991.07, pos: "SG/SF"}
             ]
         },
         "Las Vegas Aces": {
-            gm: "Rian Pacheco",
-            totalCap: 279545.21,
+            gm: "Rian",
             players: [
                 {name: "Jamal Murray", salary: 46394.10, pos: "PG"},
-                {name: "LeBron James", salary: 52627.15, pos: "SF PF"},
-                {name: "Domantas Sabonis", salary: 42336.00, pos: "PF C"},
+                {name: "LeBron James", salary: 52627.15, pos: "SF/PF"},
+                {name: "Domantas Sabonis", salary: 42336.00, pos: "PF/C"},
                 {name: "Payton Pritchard", salary: 7232.14, pos: "PG"},
-                {name: "OG Anunoby", salary: 39568.97, pos: "SF PF"},
+                {name: "OG Anunoby", salary: 39568.97, pos: "SF/PF"},
                 {name: "Mark Williams", salary: 6276.53, pos: "C"},
-                {name: "Cedric Coward", salary: 5715.12, pos: "SF SG"},
-                {name: "Immanuel Quickley", salary: 32500.00, pos: "PG SG"},
-                {name: "Mikal Bridges", salary: 24900.00, pos: "SF SG"},
+                {name: "Cedric Coward", salary: 5715.12, pos: "SF/SG"},
+                {name: "Immanuel Quickley", salary: 32500.00, pos: "PG/SG"},
+                {name: "Mikal Bridges", salary: 24900.00, pos: "SF/SG"},
                 {name: "Kel'el Ware", salary: 4443.36, pos: "C"},
                 {name: "Jaylon Tyson", salary: 3492.48, pos: "SG"},
                 {name: "Ryan Rollins", salary: 4000.00, pos: "SG"},
                 {name: "Nikola Jović", salary: 4445.42, pos: "PF"},
                 {name: "Derik Queen", salary: 5157.96, pos: "C"}
             ]
+        },
+        "Texas Rangers": {
+            gm: "Diego",
+            players: [
+                {name: "James Harden", salary: 39182.69, pos: "PG/SG"},
+                {name: "Jaylen Brown", salary: 53142.26, pos: "SF/SG"},
+                {name: "Dyson Daniels", salary: 7707.71, pos: "SG/PG"},
+                {name: "Isaiah Hartenstein", salary: 28500.00, pos: "C"},
+                {name: "Draymond Green", salary: 25892.86, pos: "PF/C"},
+                {name: "Peyton Watson", salary: 4356.48, pos: "SF"},
+                {name: "Tristan da Silva", salary: 3809.52, pos: "SF"},
+                {name: "Kyshawn George", salary: 2966.76, pos: "SG"},
+                {name: "Pascal Siakam", salary: 45550.51, pos: "PF"},
+                {name: "Devin Vassell", salary: 27000.00, pos: "SG/SF"},
+                {name: "Deandre Hunter", salary: 23303.57, pos: "SF/PF"},
+                {name: "Neemias Queta", salary: 2349.58, pos: "C"},
+                {name: "Marvin Bagley III", salary: 2296.27, pos: "PF/C"},
+                {name: "Naji Marshall", salary: 9000.00, pos: "SF"},
+                {name: "Christian Braun", salary: 4921.80, pos: "SG"},
+                {name: "Brice Sensabaugh", salary: 2693.76, pos: "SF"},
+                {name: "Danny Wolf", salary: 2801.28, pos: "PF"}
+            ]
+        },
+        "New México Sun": {
+            gm: "Endrews",
+            players: [
+                {name: "Jalen Suggs", salary: 35000.00, pos: "PG/SG"},
+                {name: "Brandon Ingram", salary: 38095.24, pos: "SF"},
+                {name: "Kristaps Porziņģis", salary: 30731.71, pos: "C/PF"},
+                {name: "Jaren Jackson Jr", salary: 35000.00, pos: "C/PF"},
+                {name: "Anfernee Simons", salary: 27678.57, pos: "SG/PG"},
+                {name: "VJ Edgecombe", salary: 11108.88, pos: "SG"},
+                {name: "Norman Powell", salary: 20482.76, pos: "SG/SF"},
+                {name: "Malik Monk", salary: 18797.62, pos: "SG/SF"},
+                {name: "Vince Williams", salary: 2301.59, pos: "SG/PG"},
+                {name: "Grant Williams", salary: 13645.50, pos: "PF"},
+                {name: "Kevin Porter Jr", salary: 5134.00, pos: "SG"},
+                {name: "Ajay Mitchell", salary: 3000.00, pos: "PG"},
+                {name: "Craig Porter Jr", salary: 2221.68, pos: "SG"},
+                {name: "Al Horford", salary: 5685.00, pos: "C/PF"},
+                {name: "Bobby Portis", salary: 13445.75, pos: "PF"},
+                {name: "Fred VanVleet", salary: 25000.00, pos: "PG"}
+            ]
         }
     };
+
+    // Calcular o teto total inicial de cada time para a lógica da troca funcionar
+    for (let team in nbaData) {
+        nbaData[team].totalCap = nbaData[team].players.reduce((sum, p) => sum + p.salary, 0);
+    }
 
     let globalSelection = {};
     Object.keys(nbaData).forEach(team => globalSelection[team] = []);
@@ -483,8 +514,8 @@
             selectA.add(new Option(team, team));
             selectB.add(new Option(team, team));
         });
-        selectA.value = "Milwaukee United";
-        selectB.value = "Atlanta Bahia Hawks";
+        selectA.value = "Atlanta Bahia Hawks";
+        selectB.value = "Milwaukee United";
         renderPlayers('A');
         renderPlayers('B');
     }
@@ -519,13 +550,11 @@
         const container = document.getElementById(`list-container-${side.toLowerCase()}`);
         const gmName = nbaData[teamName].gm;
 
-        // Atualiza os nomes no topo (seletor) e no corpo da seção
         document.getElementById(`name-${side.toLowerCase()}`).innerText = teamName;
         document.getElementById(`gm-${side.toLowerCase()}`).innerText = "GM: " + gmName;
         document.getElementById(`top-gm-${side.toLowerCase()}`).innerText = "GM: " + gmName;
         
         container.innerHTML = "";
-
         nbaData[teamName].players.forEach(player => {
             const isChecked = globalSelection[teamName].some(p => p.name === player.name);
             const label = document.createElement('label');
@@ -581,10 +610,10 @@
         const sentEl = document.getElementById(`sent-${side}`);
         
         valEl.innerText = formatMoney(total);
-        const adjustedTotal = total * 1000; 
 
-        if (adjustedTotal > CAP_MAX) valEl.className = "status-value invalid";
-        else if (adjustedTotal < CAP_MIN) valEl.className = "status-value under-min";
+        // Lógica de validação do Cap
+        if (total > CAP_MAX) valEl.className = "status-value invalid";
+        else if (total < CAP_MIN) valEl.className = "status-value under-min";
         else valEl.className = "status-value valid";
         
         diffEl.innerText = "Balanço: " + (diff >= 0 ? "+" : "") + formatMoney(diff);
@@ -603,7 +632,6 @@
 
     init();
 </script>
+
 </body>
-
 </html>
-
